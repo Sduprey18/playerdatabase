@@ -1,0 +1,14 @@
+.layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px;
+}
+
+.sidebar {
+    width: 250px;
+}
+
+.main-content {
+    flex-grow: 1;
+}

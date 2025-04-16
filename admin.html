@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="adminstyles.css">
+</head>
+
+<body>
+    <button class="right">Logout</button>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <h2>Edit existing teams or players</h2>
+        
+        <div class="search-section">
+            <form action="/search" method="GET">
+                <label for="query">Search for player:</label>
+                <input type="text" id="query" name="q" placeholder="Type here...">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        <div class="search-section">
+            <form action="/search" method="GET">
+                <label for="query">Search for team:</label>
+                <input type="text" id="query" name="q" placeholder="Type here...">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        
+        <h2>Add new teams and players</h2>
+        <div class="upload-section">
+            <div class="upload-form">
+                <p>Edit statistics of teams and players. Add additional teams and players.</p>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <label for="file">Upload file. Ensure format is [Name, age, weight, height, team, position]</label>
+                    <input type="file" id="file" name="file">
+                    <br><br>
+                    <input type="submit" value="Upload">
+                </form>
+            </div>
+            <div class="upload-form">
+                <p>Add additional teams.</p>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <label for="file">Upload file. Ensure format is [Name, stadium, location]</label>
+                    <input type="file" id="file" name="file">
+                    <br><br>
+                    <input type="submit" value="Upload">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
