@@ -1,4 +1,4 @@
 1: get players.csv into sql sql sqldatabase 
-2: after that, work on backend 
+2: after that, work on backend (the file upload, )
 3: styles 
 4: done 
