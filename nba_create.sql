@@ -1,7 +1,7 @@
 
 -- Create the NBA Stats database
-CREATE DATABASE IF NOT EXISTS nba_stats;
-USE nba_stats;
+CREATE DATABASE IF NOT EXISTS sduprey2_1;
+USE sduprey2_1;
 
 -- Create Teams table
 CREATE TABLE IF NOT EXISTS Team (
