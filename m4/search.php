@@ -24,10 +24,18 @@ $result = $conn->query($sql);
 if ($result->num_rows === 0) {
     echo "<p>No results found.</p>";
 } else {
-    echo "<ul>";
     while ($row = $result->fetch_assoc()) {
-        echo "<li><strong>{$row['type']}:</strong> " . htmlspecialchars($row['name']) . "</li>";
-    }
-    echo "</ul>";
+    $type = $row['type'];
+    $name = htmlspecialchars($row['name'], ENT_QUOTES);
+    
+    echo "<button 
+            class='search-button' 
+            data-type='$type' 
+            data-name=\"$name\">
+            $type: $name
+          </button>";
 }
+
+}
+
 ?>

@@ -5,7 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" href="homestyles.css">
+    <style>
+        .layout {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+                .card {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            z-index: 1000;
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        #close-card {
+            float: right;
+            background: crimson;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #card-content::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -16,6 +68,10 @@
                 <label for="query">Search for Team/player:</label>
                 <input type="text" id="search" name="q" placeholder="Type here...">
                 <div id="results"></div>
+                <div id="info-card" class="card hidden">
+                    <button id="close-card">X</button>
+                    <div id="card-content"></div>
+               </div>
                 <input type="submit" value="Search">
             </form>
 
@@ -68,6 +124,8 @@
     </div>
 </body>
 
+
+<!--
 <script>
 document.getElementById("search").addEventListener("input", function() {
     const query = this.value;
@@ -80,6 +138,43 @@ document.getElementById("search").addEventListener("input", function() {
         }
     };
     xhr.send();
+});
+</script>
+--> 
+<script>
+document.getElementById("search").addEventListener("input", function() {
+    const query = this.value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "search.php?q=" + encodeURIComponent(query), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            document.getElementById("results").innerHTML = xhr.responseText;
+
+            const buttons = document.querySelectorAll(".search-button");
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const type = this.dataset.type;
+                    const name = this.dataset.name;
+
+                    const xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", `details.php?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`, true);
+                    xhr2.onload = function () {
+                        if (xhr2.status === 200) {
+                            document.getElementById("card-content").innerHTML = xhr2.responseText;
+                            document.getElementById("info-card").classList.remove("hidden");
+                        }
+                    };
+                    xhr2.send();
+                });
+            });
+        }
+    };
+    xhr.send();
+});
+
+document.getElementById("close-card").addEventListener("click", function () {
+    document.getElementById("info-card").classList.add("hidden");
 });
 </script>
 
