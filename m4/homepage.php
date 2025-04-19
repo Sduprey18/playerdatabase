@@ -14,7 +14,8 @@
             <h1>Search</h1>
             <form action="/search" method="GET">
                 <label for="query">Search for Team/player:</label>
-                <input type="text" id="query" name="q" placeholder="Type here...">
+                <input type="text" id="search" name="q" placeholder="Type here...">
+                <div id="results"></div>
                 <input type="submit" value="Search">
             </form>
 
@@ -48,64 +49,38 @@
 
             <h1 class="center">Top Teams</h1>
             <div>
-                <?php
-                    // Set the form type directly in PHP
-                    $_GET['formType'] = 'topTeamsTable';
-                
-                    // Include the table generation logic
+                <?php                   
+                    $_GET['formType'] = 'topTeamsTable';                 
                     include 'tableLogic.php';
                 ?>
             </div>
 
             <h1 class="center">Top Performers</h1>
             <div>
-                <table class="center" border="10">
-                    <tr>
-                        <th>Name</th>
-                        <th>Points</th>
-                        <th>Rebounds</th>
-                        <th>Assists</th>
-                        <th>Minutes</th>
-                    </tr>
-                    <tr>
-                        <td>Jokic, Nikola</td>
-                        <td>28</td>
-                        <td>13</td>
-                        <td>8</td>
-                        <td>34</td>
-                    </tr>
-                    <tr>
-                        <td>James, Lebron</td>
-                        <td>34</td>
-                        <td>6</td>
-                        <td>8</td>
-                        <td>29</td>
-                    </tr>
-                    <tr>
-                        <td>Curry, Steph</td>
-                        <td>17</td>
-                        <td>2</td>
-                        <td>11</td>
-                        <td>35</td>
-                    </tr>
-                    <tr>
-                        <td>Williams, Jaylin</td>
-                        <td>20</td>
-                        <td>13</td>
-                        <td>11</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>Young, Trae</td>
-                        <td>44</td>
-                        <td>0</td>
-                        <td>17</td>
-                        <td>52</td>
-                    </tr>
+                    <?php                   
+                    $_GET['formType'] = 'topPlayersTable';          
+                    include 'tableLogic.php';
+                    ?>
+                             
                 </table>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+document.getElementById("search").addEventListener("input", function() {
+    const query = this.value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "search.php?q=" + encodeURIComponent(query), true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            document.getElementById("results").innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+});
+</script>
 
 </html>

@@ -38,10 +38,26 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $playerQuery ="SELECT 
-                
+                Player_Stats.Player_id,
+                Player.Name,
+                Player_Stats.Points,
+                Player_Stats.Rebounds,
+                Player_Stats.Assists,
+                Player_Stats.Minutes
+                FROM Player_Stats
+                JOIN Player ON Player.Player_id = Player_Stats.Player_id
+                ORDER BY Player_Stats.Points DESC
+                LIMIT 5
 ";
 
-#$topTeams = [];
+$playerResult = $conn->query($playerQuery);
+
+
+$topPlayers = [];
+while ($row = $playerResult->fetch_assoc()) {
+    $topPlayers[] = $row; 
+}
+
 
 while($row = $result->fetch_assoc()) {
     echo($row['name']."<br>");
@@ -67,6 +83,24 @@ foreach ($topTeams as $team) {
 echo '</table>';
 
 } if ($formType === 'topPlayersTable') {
+    echo ' <table class="center" border="10">
+                    <tr>
+                        <th>Name</th>
+                        <th>Points</th>
+                        <th>Rebounds</th>
+                        <th>Assists</th>
+                        <th>Minutes</th>
+                    </tr>';
+    foreach ($topPlayers as $player) {
+    echo '<tr>';
+    echo '<td>' . htmlspecialchars($player['Name']) . '</td>';
+    echo '<td>' . $player['Points'] . '</td>';
+    echo '<td>' . htmlspecialchars($player['Rebounds']) . '</td>';
+    echo '<td>' . htmlspecialchars($player['Assists']) . '</td>';
+    echo '<td>' . htmlspecialchars($player['Minutes']) . '</td>';
+    echo '</tr>';
+}
+    echo '</table>';
 
 }
 
