@@ -19,8 +19,6 @@ $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     echo "<h2>{$row['Name']}</h2>";
-    echo "<p><strong>Wins:</strong> {$row['Wins']}</p>";
-    echo "<p><strong>Losses:</strong> {$row['Losses']}</p>";
     
     if ($type === 'Player') {
         echo "<p><strong>Points:</strong> {$row['Points']}</p>";
@@ -28,6 +26,8 @@ if ($row = $result->fetch_assoc()) {
         echo "<p><strong>Assists:</strong> {$row['Assists']}</p>";
         echo "<p><strong>Minutes:</strong> {$row['Minutes']}</p>";
     } elseif ($type === 'Team') {
+        echo "<p><strong>Wins:</strong> {$row['Wins']}</p>";
+        echo "<p><strong>Losses:</strong> {$row['Losses']}</p>";
         echo "<p><strong>Stadium:</strong> {$row['Stadium']}</p>";
         echo "<p><strong>Location:</strong> {$row['Location']}</p>";
     }

@@ -67,9 +67,9 @@
             <form action="/search" method="GET">
                 <label for="query">Search for Team/player:</label>
                 <input type="text" id="search" name="q" placeholder="Type here...">
-                <div id="results"></div>
+                <div id="results" ></div>
                 <div id="info-card" class="card hidden">
-                    <button id="close-card">X</button>
+                    <button id="close-card" type ="button">X</button>
                     <div id="card-content"></div>
                </div>
                 <input type="submit" value="Search">
@@ -154,6 +154,7 @@ document.getElementById("search").addEventListener("input", function() {
             const buttons = document.querySelectorAll(".search-button");
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
+                    ///e.preventDefault();
                     const type = this.dataset.type;
                     const name = this.dataset.name;
 

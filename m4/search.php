@@ -30,6 +30,7 @@ if ($result->num_rows === 0) {
     
     echo "<button 
             class='search-button' 
+            type='button'      
             data-type='$type' 
             data-name=\"$name\">
             $type: $name
