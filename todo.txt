@@ -1,4 +1,13 @@
-1: get players.csv into sql sql sqldatabase 
+1: connect php to the sql db
 2: after that, work on backend 
 3: styles 
 4: done 
+
+
+TO MAKE CHANGES:
+
+STEP 1: OUTSIDE OF BETAWEB RUN: ./sync.sh
+STEP 2: INSIDE BETAWEB RUN: cd ~/public_html/m4
+step 3: then u should be good
+
+the links should look like: http://betaweb.csug.rochester.edu/~sduprey2/m4/admin.html

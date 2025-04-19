@@ -48,44 +48,13 @@
 
             <h1 class="center">Top Teams</h1>
             <div>
-                <table class="center" border="10">
-                    <tr>
-                        <th>Name</th>
-                        <th>Wins</th>
-                        <th>Arena</th>
-                        <th>Location</th>
-                    </tr>
-                    <tr>
-                        <td>Celtics</td>
-                        <td>60</td>
-                        <td>TD Garden</td>
-                        <td>Boston</td>
-                    </tr>
-                    <tr>
-                        <td>Heat</td>
-                        <td>50</td>
-                        <td>FTX Arena</td>
-                        <td>Miami</td>
-                    </tr>
-                    <tr>
-                        <td>Thunder</td>
-                        <td>49</td>
-                        <td>Paycom Arena</td>
-                        <td>Oklahoma</td>
-                    </tr>
-                    <tr>
-                        <td>Suns</td>
-                        <td>47</td>
-                        <td>PHX Arena</td>
-                        <td>Phoenix</td>
-                    </tr>
-                    <tr>
-                        <td>Rockets</td>
-                        <td>44</td>
-                        <td>Toyota Center</td>
-                        <td>Houston</td>
-                    </tr>
-                </table>
+                <?php
+                    // Set the form type directly in PHP
+                    $_GET['formType'] = 'topTeamsTable';
+                
+                    // Include the table generation logic
+                    include 'tableLogic.php';
+                ?>
             </div>
 
             <h1 class="center">Top Performers</h1>
