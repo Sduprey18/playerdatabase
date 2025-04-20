@@ -33,25 +33,9 @@ if ($row = $result->fetch_assoc()) {
         echo "<p><strong>Stadium:</strong> {$row['Stadium']}</p>";
         echo "<p><strong>Location:</strong> {$row['Location']}</p>";
     }
-    if ($isAdmin) {
-        
-        echo "
-        <form action='editDB.php' method='POST' style='margin-top:1em;'>
-          <input type='hidden' name='formType' value='Delete'>
-          <input type='hidden' name='id'        value='{$row[$type . '_id']}'>
-          <input type='hidden' name='type'      value='$type'>
-          <button type='submit' style='background:crimson;color:white;padding:8px;border:none;border-radius:4px;'>
-            Delete $type
-          </button>
-        </form>";
-
-        
-        echo "
-        <a href='editForm.php?type=$type&id={$row[$type . '_id']}' 
-           style='display:inline-block;margin-top:0.5em;padding:8px 12px;background:#007bff;color:#fff;text-decoration:none;border-radius:4px;'>
-          Edit $type
-        </a>";
-    }
+    
+    // Add hidden input for the ID
+    echo "<input type='hidden' id='item-id' value='{$row[$type . '_id']}'>";
 } else {
     echo "No info found.";
 }
