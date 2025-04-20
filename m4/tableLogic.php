@@ -34,9 +34,10 @@ $result = $conn->query($sqlQuery);
 
 $topTeams = [];
 while ($row = $result->fetch_assoc()) {
-    $topTeams[] = $row; // Store the full row of info
+    $topTeams[] = $row;
 }
 
+/*
 $playerQuery ="SELECT 
                 Player_Stats.Player_id,
                 Player.Name,
@@ -48,7 +49,24 @@ $playerQuery ="SELECT
                 JOIN Player ON Player.Player_id = Player_Stats.Player_id
                 ORDER BY Player_Stats.Points DESC
                 LIMIT 5
-";
+";*/
+
+$playerQuery = "SELECT
+    Player_Stats.Player_id,
+    Player.Name,
+    Player_Stats.Points,
+    Player_Stats.Rebounds,
+    Player_Stats.Assists,
+    Player_Stats.Minutes,
+    Player_Advanced_Stats.True_shooting_percentage,
+    Player_Advanced_Stats.Plus_minus,
+    Player_Advanced_Stats.Per
+FROM Player_Stats
+JOIN Player ON Player.Player_id = Player_Stats.Player_id
+JOIN Player_Advanced_Stats ON Player_Stats.Player_id = Player_Advanced_Stats.Player_id
+ORDER BY Player_Stats.Points DESC
+LIMIT 5";
+
 
 $playerResult = $conn->query($playerQuery);
 
@@ -90,6 +108,9 @@ echo '</table>';
                         <th>Rebounds</th>
                         <th>Assists</th>
                         <th>Minutes</th>
+                        <th>TS%</th>
+                        <th>-+</th>
+                        <th>PER</th>
                     </tr>';
     foreach ($topPlayers as $player) {
     echo '<tr>';
@@ -98,6 +119,9 @@ echo '</table>';
     echo '<td>' . htmlspecialchars($player['Rebounds']) . '</td>';
     echo '<td>' . htmlspecialchars($player['Assists']) . '</td>';
     echo '<td>' . htmlspecialchars($player['Minutes']) . '</td>';
+    echo '<td>' . htmlspecialchars($player['True_shooting_percentage']) . '</td>';
+    echo '<td>' . htmlspecialchars($player['Plus_minus']) . '</td>';
+    echo '<td>' . htmlspecialchars($player['Per']) . '</td>';
     echo '</tr>';
 }
     echo '</table>';

@@ -58,6 +58,9 @@
         }
     </style>
 
+    <script>
+        const isAdmin = false; 
+    </script>
 </head>
 
 <body>
