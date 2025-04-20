@@ -59,7 +59,6 @@ document.getElementById("search").addEventListener("input", function () {
 
                     const xhr2 = new XMLHttpRequest();
 
-                    // Build the URL with optional admin=true
                     let url = `details.php?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`;
                     if (typeof isAdmin !== "undefined" && isAdmin) {
                         url += "&admin=true";

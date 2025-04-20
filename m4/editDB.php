@@ -31,19 +31,50 @@ $ALLOWED = [
 ];
 
 function deleteItem($conn, $id, $type){
-    if ($type=="Player"){
-        $sql = "DELETE FROM Player WHERE Player_id=$id";
-        $conn->query($sql);
-        $sql = "DELETE FROM Player_Stats WHERE Player_id=$id";
-        $conn->query($sql);
-        $sql = "DELETE FROM Player_Advanced_Stats WHERE Player_id=$id";
-        $conn->query($sql);
-    }     
-    if ($type=="Team"){
-        $sql = "DELETE FROM Team WHERE Team_id=$id";
-        $conn->query($sql);
-        $sql = "DELETE FROM Team_Stats WHERE Team_id=$id";
-        $conn->query($sql);
+   
+    $conn->begin_transaction();
+    
+    try {
+        if ($type == "Player") {
+           
+            $sql = "DELETE FROM Player_Advanced_Stats WHERE Player_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            
+            $sql = "DELETE FROM Player_Stats WHERE Player_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            
+            // Finally delete from main table
+            $sql = "DELETE FROM Player WHERE Player_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        }     
+        else if ($type == "Team") {
+            
+            $sql = "DELETE FROM Team_Stats WHERE Team_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            
+            // Finally delete from main table
+            $sql = "DELETE FROM Team WHERE Team_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        }
+        
+       
+        $conn->commit();
+        return true;
+    } catch (Exception $e) {
+        
+        $conn->rollback();
+        error_log("Error deleting item: " . $e->getMessage());
+        return false;
     }
 }
 
@@ -87,7 +118,7 @@ function buildSet(array $changes, array $allowed): array
     }
     if (!$fields) { throw new InvalidArgumentException("No valid columns"); }
 
-    $types = str_repeat('s', count($vals));   // all as strings for brevity
+    $types = str_repeat('s', count($vals));   
     return [implode(', ', $fields), $vals, $types];
 }
 
