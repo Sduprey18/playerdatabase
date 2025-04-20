@@ -72,7 +72,6 @@
                     <button id="close-card" type ="button">X</button>
                     <div id="card-content"></div>
                </div>
-                <input type="submit" value="Search">
             </form>
 
             <h3>Admin Login</h3>
@@ -122,6 +121,7 @@
             </div>
         </div>
     </div>
+    <script src="search.js"></script>
 </body>
 
 
@@ -141,42 +141,6 @@ document.getElementById("search").addEventListener("input", function() {
 });
 </script>
 --> 
-<script>
-document.getElementById("search").addEventListener("input", function() {
-    const query = this.value;
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "search.php?q=" + encodeURIComponent(query), true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            document.getElementById("results").innerHTML = xhr.responseText;
-
-            const buttons = document.querySelectorAll(".search-button");
-            buttons.forEach(button => {
-                button.addEventListener("click", function () {
-                    ///e.preventDefault();
-                    const type = this.dataset.type;
-                    const name = this.dataset.name;
-
-                    const xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", `details.php?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`, true);
-                    xhr2.onload = function () {
-                        if (xhr2.status === 200) {
-                            document.getElementById("card-content").innerHTML = xhr2.responseText;
-                            document.getElementById("info-card").classList.remove("hidden");
-                        }
-                    };
-                    xhr2.send();
-                });
-            });
-        }
-    };
-    xhr.send();
-});
-
-document.getElementById("close-card").addEventListener("click", function () {
-    document.getElementById("info-card").classList.add("hidden");
-});
-</script>
 
 </html>

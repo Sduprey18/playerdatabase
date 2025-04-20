@@ -9,7 +9,6 @@ if ($q === '') {
     exit;
 }
 
-// Prepare query to search both Player and Team tables
 $escaped = $conn->real_escape_string($q);
 
 $sql = "

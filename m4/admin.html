@@ -5,7 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="adminstyles.css">
+    <style>
+        .layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 20px;
+        }
+    
+        .sidebar {
+            width: 250px;
+        }
+    
+        .main-content {
+            flex-grow: 1;
+        }
+    
+        .card {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            z-index: 1000;
+        }
+    
+        .card.hidden {
+            display: none;
+        }
+    
+        #close-card {
+            float: right;
+            background: crimson;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        #card-content::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,20 +66,17 @@
         <h1>Admin Dashboard</h1>
         <h2>Edit existing teams or players</h2>
         
-        <div class="search-section">
-            <form action="/search" method="GET">
-                <label for="query">Search for player:</label>
-                <input type="text" id="query" name="q" placeholder="Type here...">
-                <input type="submit" value="Search">
-            </form>
-        </div>
-        <div class="search-section">
-            <form action="/search" method="GET">
-                <label for="query">Search for team:</label>
-                <input type="text" id="query" name="q" placeholder="Type here...">
-                <input type="submit" value="Search">
-            </form>
-        </div>
+        <form action="/search" method="GET">
+            <label for="query">Search for Team/player:</label>
+            <input type="text" id="search" name="q" placeholder="Type here...">
+            <div id="results"></div>
+            <div id="info-card" class="card hidden">
+                <button id="close-card" type="button">X</button>
+                <button id="edit-card" type="button">Edit player attributes</button>
+                <button id="delete-card" type="button">Delete player </button>
+                <div id="card-content"></div>
+            </div>
+        </form>
         
         <h2>Add new teams and players</h2>
         <div class="upload-section">
@@ -51,6 +100,7 @@
             </div>
         </div>
     </div>
+    <script src="search.js"></script>
 </body>
 
 </html>
