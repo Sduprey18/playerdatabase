@@ -1,0 +1,142 @@
+/* Global Styles */
+:root {
+    --primary-blue: #1D428A;
+    --primary-red: #C8102E;
+    --text-gray: #666;
+    --light-gray: #f8f9fa;
+    --border-color: #e9ecef;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-gray);
+}
+
+/* Navigation */
+.nav-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-blue);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+    color: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin: 0 0 1rem 0;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Tables */
+.table-container {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.center {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.center th {
+    background-color: var(--light-gray);
+    color: var(--text-gray);
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.center td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.center tr:hover {
+    background-color: var(--light-gray);
+}
+
+/* Section Headers */
+.section-header {
+    color: var(--text-gray);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 2rem;
+    align-items: center;
+}
+
+.filter-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: white;
+    color: var(--text-gray);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.filter-button:hover {
+    background: var(--light-gray);
+}
+
+/* Remove default table borders */
+table[border="10"] {
+    border: none !important;
+} 

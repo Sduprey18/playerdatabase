@@ -3,155 +3,156 @@ require_once 'connect.php';
 
 $formType = $_GET['formType'] ?? '';
 
-/*
-$sqlQuery = "SELECT Team_id FROM Team_Stats ORDER BY Wins DESC LIMIT 5";
-$result = $conn->query($sqlQuery);
+switch ($formType) {
+    case 'topTeamsTable':
+        $sql = "
+            SELECT
+                t.Name,
+                ts.Wins,
+                ts.Losses,
+                t.Stadium,
+                t.Location
+            FROM Team_Stats AS ts
+            JOIN Team      AS t  ON t.Team_id = ts.Team_id
+            ORDER BY ts.Wins DESC
+            LIMIT 5
+        ";
+        if (!($result = $conn->query($sql))) {
+            die("Query failed: " . $conn->error);
+        }
+        echo '<table class="center" border="10">
+                <tr>
+                  <th>Name</th>
+                  <th>Wins</th>
+                  <th>Losses</th>
+                  <th>Arena</th>
+                  <th>Location</th>
+                </tr>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>',
+                 '<td>' . htmlspecialchars($row['Name']) . '</td>',
+                 '<td>' . intval($row['Wins']) . '</td>',
+                 '<td>' . intval($row['Losses']) . '</td>',
+                 '<td>' . htmlspecialchars($row['Stadium']) . '</td>',
+                 '<td>' . htmlspecialchars($row['Location']) . '</td>',
+                 '</tr>';
+        }
+        echo '</table>';
+        break;
 
-$topTeams = [];
-while($row = $result->fetch_assoc()) {
-    $teamId = $row['Team_id'];
-    $secondQuery = "SELECT Name FROM Team where Team_id=$teamId";
-    $secondResult = $conn->query($secondQuery);
-    if ($teamRow = $secondResult->fetch_assoc()) {
-        $topTeams[] = $teamRow['Name'];
-    }
-}*/
-$sqlQuery = "
-    SELECT 
-        Team.Team_id, 
-        Team.Name, 
-        Team.Stadium, 
-        Team.Location, 
-        Team_Stats.Wins, 
-        Team_Stats.Losses
-    FROM Team_Stats
-    JOIN Team ON Team_Stats.Team_id = Team.Team_id
-    ORDER BY Team_Stats.Wins DESC
-    LIMIT 5
-";
+    case 'topPlayersTable':
+        $sql = "
+            SELECT
+                p.Name,
+                ps.Points,
+                ps.Rebounds,
+                ps.Assists,
+                ps.Minutes
+            FROM Player_Stats AS ps
+            JOIN Player       AS p  ON p.Player_id = ps.Player_id
+            ORDER BY ps.Points DESC
+            LIMIT 5
+        ";
+        if (!($result = $conn->query($sql))) {
+            die("Query failed: " . $conn->error);
+        }
+        echo '<table class="center" border="10">
+                <tr>
+                  <th>Name</th>
+                  <th>Points</th>
+                  <th>Rebounds</th>
+                  <th>Assists</th>
+                  <th>Minutes</th>
+                </tr>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>',
+                 '<td>' . htmlspecialchars($row['Name']) . '</td>',
+                 '<td>' . intval($row['Points']) . '</td>',
+                 '<td>' . intval($row['Rebounds']) . '</td>',
+                 '<td>' . intval($row['Assists']) . '</td>',
+                 '<td>' . intval($row['Minutes']) . '</td>',
+                 '</tr>';
+        }
+        echo '</table>';
+        break;
 
-$result = $conn->query($sqlQuery);
+    case 'advancedStatsTable':
+        $sql = "
+            SELECT
+                p.Name,
+                pas.True_shooting_percentage,
+                pas.Effective_field_goal_percentage,
+                pas.Usage_rate,
+                pas.Plus_minus,
+                pas.Per
+            FROM Player_Advanced_Stats AS pas
+            JOIN Player               AS p   ON p.Player_id = pas.Player_id
+            ORDER BY pas.Per DESC
+            LIMIT 5
+        ";
+        if (!($result = $conn->query($sql))) {
+            die("Query failed: " . $conn->error);
+        }
+        echo '<table class="center" border="10">
+                <tr>
+                  <th>Name</th>
+                  <th>True Shooting %</th>
+                  <th>Effective FG %</th>
+                  <th>Usage Rate %</th>
+                  <th>Plus/Minus</th>
+                  <th>PER</th>
+                </tr>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>',
+                 '<td>' . htmlspecialchars($row['Name']) . '</td>',
+                 '<td>' . number_format($row['True_shooting_percentage'] * 100, 1)   . '%</td>',
+                 '<td>' . number_format($row['Effective_field_goal_percentage'] * 100, 1) . '%</td>',
+                 '<td>' . number_format($row['Usage_rate'] * 100, 1)                . '%</td>',
+                 '<td>' . intval($row['Plus_minus'])                                . '</td>',
+                 '<td>' . number_format($row['Per'], 1)                             . '</td>',
+                 '</tr>';
+        }
+        echo '</table>';
+        break;
 
-$topTeams = [];
-while ($row = $result->fetch_assoc()) {
-    $topTeams[] = $row;
+    case 'teamStatsTable':
+        $sql = "
+            SELECT
+                t.Name,
+                ts.Wins,
+                ts.Losses,
+                ts.Games_played,
+                ts.Win_percentage
+            FROM Team_Stats AS ts
+            JOIN Team      AS t   ON t.Team_id = ts.Team_id
+            ORDER BY ts.Wins DESC
+            LIMIT 5
+        ";
+        if (!($result = $conn->query($sql))) {
+            die("Query failed: " . $conn->error);
+        }
+        echo '<table class="center" border="10">
+                <tr>
+                  <th>Name</th>
+                  <th>Wins</th>
+                  <th>Losses</th>
+                  <th>Games Played</th>
+                  <th>Win %</th>
+                </tr>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>',
+                 '<td>' . htmlspecialchars($row['Name']) . '</td>',
+                 '<td>' . intval($row['Wins']) . '</td>',
+                 '<td>' . intval($row['Losses']) . '</td>',
+                 '<td>' . intval($row['Games_played']) . '</td>',
+                 '<td>' . number_format($row['Win_percentage'] * 100, 1) . '%</td>',
+                 '</tr>';
+        }
+        echo '</table>';
+        break;
+
+    default:
+        echo '<p>No table selected.</p>';
+        break;
 }
-
-/*
-$playerQuery ="SELECT 
-                Player_Stats.Player_id,
-                Player.Name,
-                Player_Stats.Points,
-                Player_Stats.Rebounds,
-                Player_Stats.Assists,
-                Player_Stats.Minutes
-                FROM Player_Stats
-                JOIN Player ON Player.Player_id = Player_Stats.Player_id
-                ORDER BY Player_Stats.Points DESC
-                LIMIT 5
-";*/
-
-$playerQuery = "SELECT
-    Player_Stats.Player_id,
-    Player.Name,
-    Player_Stats.Points,
-    Player_Stats.Rebounds,
-    Player_Stats.Assists,
-    Player_Stats.Minutes,
-    Player_Advanced_Stats.True_shooting_percentage,
-    Player_Advanced_Stats.Plus_minus,
-    Player_Advanced_Stats.Per
-FROM Player_Stats
-JOIN Player ON Player.Player_id = Player_Stats.Player_id
-JOIN Player_Advanced_Stats ON Player_Stats.Player_id = Player_Advanced_Stats.Player_id
-ORDER BY Player_Stats.Points DESC
-LIMIT 5";
-
-
-$playerResult = $conn->query($playerQuery);
-
-
-$topPlayers = [];
-while ($row = $playerResult->fetch_assoc()) {
-    $topPlayers[] = $row; 
-}
-
-
-while($row = $result->fetch_assoc()) {
-    echo($row['name']."<br>");
-}
-if ($formType === 'topTeamsTable') {
-    echo '
-    <table border="10" class="center">
-        <tr>
-            <th>Name</th>
-            <th>Wins</th>
-            <th>Arena</th>
-            <th>Location</th>
-        </tr>';
-        
-foreach ($topTeams as $team) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($team['Name']) . '</td>';
-    echo '<td>' . $team['Wins'] . '</td>';
-    echo '<td>' . htmlspecialchars($team['Stadium']) . '</td>';
-    echo '<td>' . htmlspecialchars($team['Location']) . '</td>';
-    echo '</tr>';
-}
-echo '</table>';
-
-} if ($formType === 'topPlayersTable') {
-    echo ' <table class="center" border="10">
-                    <tr>
-                        <th>Name</th>
-                        <th>Points</th>
-                        <th>Rebounds</th>
-                        <th>Assists</th>
-                        <th>Minutes</th>
-                        <th>TS%</th>
-                        <th>-+</th>
-                        <th>PER</th>
-                    </tr>';
-    foreach ($topPlayers as $player) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($player['Name']) . '</td>';
-    echo '<td>' . $player['Points'] . '</td>';
-    echo '<td>' . htmlspecialchars($player['Rebounds']) . '</td>';
-    echo '<td>' . htmlspecialchars($player['Assists']) . '</td>';
-    echo '<td>' . htmlspecialchars($player['Minutes']) . '</td>';
-    echo '<td>' . htmlspecialchars($player['True_shooting_percentage']) . '</td>';
-    echo '<td>' . htmlspecialchars($player['Plus_minus']) . '</td>';
-    echo '<td>' . htmlspecialchars($player['Per']) . '</td>';
-    echo '</tr>';
-}
-    echo '</table>';
-
-}
-
-
-
-/// reading csv 
-/*
-$file = fopen('players.csv', 'r');
-$line = fgetcsv($file, 0, ',','\\' );
-while ($line != false){
-    ///echo($line);
-    print_r($line);
-    $line = fgetcsv($file, 0, ','"'\\' );
-    
-}
-fclose($file);
-*/
-
-
-
-///writing to csv 
-/*
-$file = fopen("csv.name", "a");
-
-fputcsv($file,["thing x", "thing x+1", "thing xxx..."]);
-
-fclose($file);
-
-*/
 ?>
