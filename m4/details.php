@@ -34,7 +34,7 @@ if ($row = $result->fetch_assoc()) {
         echo "<p><strong>Location:</strong> {$row['Location']}</p>";
     }
     
-    // Add hidden input for the ID
+    
     echo "<input type='hidden' id='item-id' value='{$row[$type . '_id']}'>";
 } else {
     echo "No info found.";
