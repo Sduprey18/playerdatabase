@@ -1,0 +1,56 @@
+# NBA Player & Team Statistics Database
+
+This project uses MySQL for storing NBA team and player statistics. It includes tables for teams, players, core stats, and advanced player metrics. We used dummy data for the databse. Bellow is the table informations. 
+
+
+**Database Name:** `sduprey2_1`
+### Team
+Stores information about each NBA team.
+- `Team_id` (INT, Primary Key)
+- `Name` (VARCHAR)
+- `Stadium` (VARCHAR)
+- `Location` (VARCHAR)
+
+### Player
+Stores player details and team affiliation.
+- `Player_id` (INT, Primary Key)
+- `Name` (VARCHAR)
+- `Age` (INT)
+- `Weight` (INT)
+- `Height` (DECIMAL)
+- `Team_id` (INT, Foreign Key referencing `Team`)
+- `Position` (VARCHAR)
+
+### Player_Stats
+Stores basic player performance statistics.
+- `Player_id` (INT, Primary Key, Foreign Key referencing `Player`)
+- `Points` (DECIMAL)
+- `Rebounds` (DECIMAL)
+- `Assists` (DECIMAL)
+- `Steals` (DECIMAL)
+- `Blocks` (DECIMAL)
+- `Turnovers` (DECIMAL)
+- `Field_goal_percentage` (DECIMAL)
+- `Three_point_percentage` (DECIMAL)
+- `Minutes` (INT)
+
+### Player_Advanced_Stats
+Stores advanced analytics for each player.
+- `Player_id` (INT, Primary Key, Foreign Key referencing `Player`)
+- `True_shooting_percentage` (DECIMAL)
+- `Effective_field_goal_percentage` (DECIMAL)
+- `Usage_rate` (DECIMAL)
+- `Plus_minus` (INT)
+- `Per` (DECIMAL)
+
+### Team_Stats
+Stores seasonal team performance data.
+- `Team_id` (INT, Primary Key, Foreign Key referencing `Team`)
+- `Wins` (INT)
+- `Losses` (INT)
+- `Games_played` (INT)
+- `Win_percentage` (DECIMAL)
+- `Home_record` (VARCHAR, optional)
+- `Away_record` (VARCHAR, optional)
+
+
